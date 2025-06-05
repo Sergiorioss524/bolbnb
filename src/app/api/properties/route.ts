@@ -6,7 +6,7 @@ export async function POST(request: Request) {
   try {
     const session = await auth();
     
-    if (!session?.user) {
+    if (!session?.user?.id) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
 
@@ -33,7 +33,7 @@ export async function POST(request: Request) {
         bedrooms,
         bathrooms,
         userId: session.user.id,
-        // imageUrls: [], // Add this field after implementing image upload
+        imageUrls: [], // Initialize with empty array
       },
     });
 

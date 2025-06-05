@@ -33,7 +33,7 @@ export default function PropertyForm() {
       Object.entries(formData).forEach(([key, value]) => {
         if (key === 'images' && value) {
           Array.from(value).forEach((file) => {
-            form.append('images', file);
+            form.append('images', file as Blob);
           });
         } else {
           form.append(key, String(value));

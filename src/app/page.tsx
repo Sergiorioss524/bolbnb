@@ -1,6 +1,8 @@
 import Link from "next/link"
 import Image from "next/image"
 import { Search, MapPin, CreditCard, Star, Users, Home } from "lucide-react"
+import AuthButton from "./_components/AuthButton"
+import BecomeHostButton from "./_components/BecomeHostButton"
 
 export default function HomePage() {
   return (
@@ -13,15 +15,8 @@ export default function HomePage() {
           </Link>
 
           <div className="hidden md:flex items-center space-x-4">
-            <Link href="/host" className="text-sm font-medium hover:text-rose-500">
-              Conviértete en anfitrión
-            </Link>
-            <Link
-              href="/login"
-              className="rounded-full bg-rose-500 px-4 py-2 text-sm font-medium text-white hover:bg-rose-600"
-            >
-              Iniciar sesión
-            </Link>
+            <BecomeHostButton />
+            <AuthButton />
           </div>
         </div>
       </header>

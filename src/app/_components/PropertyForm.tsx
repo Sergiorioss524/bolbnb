@@ -1,5 +1,7 @@
+'use client'
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useSession } from "next-auth/react";
 
 interface PropertyFormData {
   title: string;
@@ -13,6 +15,7 @@ interface PropertyFormData {
 
 export default function PropertyForm() {
   const router = useRouter();
+  const { data: session, status } = useSession();
   const [formData, setFormData] = useState<PropertyFormData>({
     title: '',
     description: '',
@@ -23,6 +26,18 @@ export default function PropertyForm() {
     images: null,
   });
   const [loading, setLoading] = useState(false);
+
+  // Loading state
+  if (status === "loading") return <div>Loading...</div>;
+
+  // Not logged in
+  if (!session) return <div>Please log in to access this page.</div>;
+
+  // Not a verified host
+  const user = session.user as { role?: string; isVerified?: boolean };
+  if (user.role !== "host" || !user.isVerified) {
+    return <div>Only verified hosts can list properties.</div>;
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
